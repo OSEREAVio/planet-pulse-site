@@ -4,176 +4,487 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planet Pulse - Explore Earth's Natural Events</title>
+    <meta name="description" content="Real-time earthquakes, wildfires, volcanoes, and storms on an interactive map. Kid-friendly earth science education.">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a1628;
-            color: #e8ecf1;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fef9f3;
+            color: #2d3748;
             line-height: 1.6;
+            overflow-x: hidden;
         }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(254, 249, 243, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #2d3748;
+        }
+        nav .logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+        }
+        nav .logo span {
+            font-weight: 800;
+            font-size: 18px;
+        }
+        nav .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+        nav .nav-links a {
+            color: #718096;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        nav .nav-links a:hover { color: #e8813a; }
+        .nav-cta {
+            background: #e8813a;
+            color: #fff !important;
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-weight: 700 !important;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(232, 129, 58, 0.4);
+        }
+
+        /* HERO */
         .hero {
+            padding: 140px 24px 80px;
             text-align: center;
-            padding: 80px 24px 60px;
-            background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 50%, #0a1628 100%);
+            background: linear-gradient(180deg, #fef9f3 0%, #fff5eb 100%);
+            position: relative;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(232, 129, 58, 0.12);
+            color: #e8813a;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
         }
         .hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #4fc3f7, #81c784);
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            color: #1a202c;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, #e8813a, #f6a623);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .hero .tagline {
-            font-size: 20px;
-            color: #90a4ae;
-            margin-bottom: 32px;
+        .hero p {
+            font-size: 18px;
+            color: #718096;
+            max-width: 520px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
         }
-        .hero .description {
-            max-width: 600px;
-            margin: 0 auto 40px;
-            font-size: 17px;
-            color: #b0bec5;
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
         }
-        .badge {
-            display: inline-block;
-            background: #fff;
-            border-radius: 14px;
-            padding: 8px 24px;
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1a202c;
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 16px;
             text-decoration: none;
-            color: #0a1628;
             font-weight: 700;
             font-size: 16px;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .badge:hover { transform: scale(1.05); }
-        .features {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 60px 24px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        .btn-primary svg { width: 22px; height: 22px; }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            color: #2d3748;
+            padding: 14px 28px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            transition: border-color 0.2s;
+        }
+        .btn-secondary:hover { border-color: #e8813a; }
+        .price-tag {
+            font-size: 13px;
+            color: #e8813a;
+            font-weight: 600;
+        }
+
+        /* PHONE SHOWCASE */
+        .phone-showcase {
+            display: flex;
+            justify-content: center;
             gap: 24px;
-        }
-        .feature-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 28px;
-        }
-        .feature-card .icon { font-size: 36px; margin-bottom: 12px; }
-        .feature-card h3 { font-size: 18px; margin-bottom: 8px; color: #fff; }
-        .feature-card p { font-size: 14px; color: #90a4ae; }
-        .section {
-            max-width: 700px;
+            padding: 0 24px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 60px 24px;
         }
-        .section h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #fff;
+        .phone-frame {
+            background: #1a202c;
+            border-radius: 36px;
+            padding: 10px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.15);
+            transition: transform 0.4s ease;
+            flex-shrink: 0;
         }
-        .section p, .section li {
-            color: #b0bec5;
-            font-size: 15px;
+        .phone-frame:hover { transform: translateY(-8px); }
+        .phone-frame img {
+            border-radius: 28px;
+            display: block;
+            width: 220px;
+            height: auto;
+        }
+        .phone-frame.featured {
+            transform: scale(1.08);
+            z-index: 2;
+        }
+        .phone-frame.featured:hover { transform: scale(1.08) translateY(-8px); }
+
+        /* FEATURES SECTION */
+        .features-section {
+            padding: 100px 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .section-label {
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #e8813a;
             margin-bottom: 12px;
         }
-        .section ul { padding-left: 20px; }
-        .section a { color: #4fc3f7; }
-        .divider {
-            border: none;
-            border-top: 1px solid rgba(255,255,255,0.08);
+        .section-title {
+            text-align: center;
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 800;
+            margin-bottom: 56px;
+            color: #1a202c;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .feature-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 32px 28px;
+            border: 1px solid rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        }
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 16px;
+        }
+        .feature-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a202c;
+        }
+        .feature-card p {
+            font-size: 14px;
+            color: #718096;
+            line-height: 1.6;
+        }
+        .fi-orange { background: rgba(232,129,58,0.12); }
+        .fi-blue { background: rgba(66,153,225,0.12); }
+        .fi-green { background: rgba(72,187,120,0.12); }
+        .fi-red { background: rgba(245,101,101,0.12); }
+        .fi-purple { background: rgba(159,122,234,0.12); }
+        .fi-yellow { background: rgba(236,201,75,0.15); }
+
+        /* DATA SOURCES */
+        .data-strip {
+            background: #1a202c;
+            padding: 40px 24px;
+            text-align: center;
+        }
+        .data-strip p {
+            color: #718096;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .data-logos {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .data-logos span {
+            color: #a0aec0;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* SUPPORT & PRIVACY */
+        .info-sections {
             max-width: 700px;
             margin: 0 auto;
+            padding: 80px 24px;
         }
+        .info-sections h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #1a202c;
+        }
+        .info-sections p, .info-sections li {
+            color: #718096;
+            font-size: 15px;
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+        .info-sections ul { padding-left: 20px; margin-bottom: 20px; }
+        .info-sections strong { color: #2d3748; }
+        .info-sections a { color: #e8813a; }
+        .info-divider {
+            border: none;
+            border-top: 1px solid #e2e8f0;
+            margin: 48px 0;
+        }
+
+        /* FOOTER */
         footer {
             text-align: center;
             padding: 40px 24px;
-            color: #546e7a;
+            border-top: 1px solid #e2e8f0;
+        }
+        footer img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        footer p {
+            color: #a0aec0;
             font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .phone-showcase { gap: 12px; }
+            .phone-frame img { width: 150px; }
+            .phone-frame { border-radius: 24px; padding: 6px; }
+            .phone-frame img { border-radius: 20px; }
+            .phone-frame.featured { transform: scale(1.04); }
+            .phone-frame.featured:hover { transform: scale(1.04) translateY(-4px); }
+            nav .nav-links a:not(.nav-cta) { display: none; }
+        }
+        @media (max-width: 480px) {
+            .phone-frame img { width: 110px; }
+            .phone-showcase { gap: 8px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="logo">
+            <img src="images/app-icon.png" alt="Planet Pulse">
+            <span>Planet Pulse</span>
+        </a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#support">Support</a>
+            <a href="#privacy">Privacy</a>
+            <a href="https://apps.apple.com/app/planet-pulse/id6745498845" class="nav-cta">Download</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
     <div class="hero">
-        <h1>Planet Pulse</h1>
-        <p class="tagline">Explore Earth's Natural Events</p>
-        <p class="description">
-            Real-time earthquakes, wildfires, volcanoes, and storms on an interactive satellite map.
-            Daily quizzes, safety tips, and kid-friendly explanations make learning about our planet an adventure.
-        </p>
-        <a class="badge" href="https://apps.apple.com/app/planet-pulse/id6745498845">Download on the App Store</a>
-    </div>
+        <div class="hero-badge">Earth Science for Kids & Families</div>
+        <h1>Explore Our<br><span class="highlight">Living Planet</span></h1>
+        <p>Real-time earthquakes, volcanoes, wildfires, and storms on an interactive satellite map. Kid-friendly explanations, daily quizzes, and safety tips.</p>
+        <div class="hero-buttons">
+            <a href="https://apps.apple.com/app/planet-pulse/id6745498845" class="btn-primary">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                Download Free
+            </a>
+            <div style="text-align: center;">
+                <span class="price-tag">Free to explore. Unlock Pro for $0.99</span>
+            </div>
+        </div>
 
-    <div class="features">
-        <div class="feature-card">
-            <div class="icon">🌍</div>
-            <h3>Live Map</h3>
-            <p>See real-time earthquakes, wildfires, volcanoes, tropical storms, and severe weather alerts on a satellite map.</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">🧠</div>
-            <h3>Daily Quiz</h3>
-            <p>Test your earth science knowledge with a new Brain Blast quiz every day. Learn about weather, geology, and more.</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">🛡️</div>
-            <h3>Safety Tips</h3>
-            <p>Kid-friendly safety tips for every type of natural event. Learn what to do during tornadoes, floods, and earthquakes.</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">📊</div>
-            <h3>Real Data</h3>
-            <p>Powered by USGS, NASA, NOAA, and other trusted scientific sources. Real science, real events.</p>
+        <!-- PHONE SCREENSHOTS -->
+        <div class="phone-showcase">
+            <div class="phone-frame">
+                <img src="images/screen-map.png" alt="Interactive satellite map with weather radar and event layers">
+            </div>
+            <div class="phone-frame featured">
+                <img src="images/screen-home.png" alt="Home screen showing live earthquakes and famous historical events">
+            </div>
+            <div class="phone-frame">
+                <img src="images/screen-detail.png" alt="Event detail page with kid-friendly explanations and amazing facts">
+            </div>
         </div>
     </div>
 
-    <hr class="divider">
-
-    <div class="section" id="support">
-        <h2>Support</h2>
-        <p>Need help with Planet Pulse? Here are some common solutions:</p>
-        <ul>
-            <li><strong>Map not loading:</strong> Check your internet connection and try the refresh button in the top-right corner.</li>
-            <li><strong>Location not working:</strong> Go to Settings > Privacy > Location Services and make sure Planet Pulse is allowed.</li>
-            <li><strong>Restore purchase:</strong> Open the app, tap the settings icon, and tap "Restore Purchase" to restore your Pro unlock.</li>
-            <li><strong>Data seems outdated:</strong> Tap the refresh button on the map screen. Earthquake data updates every few minutes, wildfires every hour.</li>
-        </ul>
-        <p>Still need help? Reach out through the App Store listing.</p>
+    <!-- DATA SOURCES STRIP -->
+    <div class="data-strip">
+        <p>Powered by trusted science</p>
+        <div class="data-logos">
+            <span>USGS</span>
+            <span>NASA</span>
+            <span>NOAA</span>
+            <span>Open-Meteo</span>
+            <span>RainViewer</span>
+        </div>
     </div>
 
-    <hr class="divider">
-
-    <div class="section" id="privacy">
-        <h2>Privacy Policy</h2>
-        <p><strong>Last updated:</strong> February 2026</p>
-        <p>Planet Pulse is designed with privacy in mind, especially for our younger users.</p>
-        <p><strong>Data we collect:</strong></p>
-        <ul>
-            <li><strong>Location (optional):</strong> Used only to show weather and air quality near you. Your location is never stored or shared.</li>
-            <li><strong>Age group:</strong> Stored locally on your device only, to tailor content difficulty. Never sent to any server.</li>
-            <li><strong>Purchase data:</strong> Managed by Apple and RevenueCat to process your Pro unlock. We do not see your payment details.</li>
-        </ul>
-        <p><strong>Data we do NOT collect:</strong></p>
-        <ul>
-            <li>No personal information (name, email, phone)</li>
-            <li>No tracking or advertising identifiers</li>
-            <li>No analytics or usage tracking</li>
-            <li>No data shared with third parties for advertising</li>
-        </ul>
-        <p><strong>Third-party services:</strong></p>
-        <ul>
-            <li><strong>Mapbox:</strong> Provides map tiles. Subject to <a href="https://www.mapbox.com/legal/privacy">Mapbox Privacy Policy</a>.</li>
-            <li><strong>RevenueCat:</strong> Manages in-app purchases. Subject to <a href="https://www.revenuecat.com/privacy">RevenueCat Privacy Policy</a>.</li>
-        </ul>
-        <p>Questions about privacy? Reach out through the App Store listing.</p>
+    <!-- FEATURES -->
+    <div class="features-section" id="features">
+        <div class="section-label">Features</div>
+        <h2 class="section-title">Everything kids need to<br>understand our planet</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon fi-blue">🗺️</div>
+                <h3>Live Satellite Map</h3>
+                <p>Toggle layers for earthquakes, wildfires, volcanoes, storms, weather radar, and NOAA severe alerts.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon fi-orange">🔥</div>
+                <h3>Global Wildfires</h3>
+                <p>NASA FIRMS data shows active fires worldwide, updated hourly. Tap any fire to learn more.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon fi-red">🌋</div>
+                <h3>Volcano Alerts</h3>
+                <p>USGS alert levels merged with global volcano tracking. See which ones are rumbling right now.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon fi-green">🧠</div>
+                <h3>Daily Brain Blast</h3>
+                <p>A new earth science quiz every day. Learn about weather, earthquakes, volcanoes, and more.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon fi-purple">📚</div>
+                <h3>Famous Disasters</h3>
+                <p>Explore history's most incredible events with photos, stats, and easy explanations kids can understand.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon fi-yellow">🛡️</div>
+                <h3>Safety Tips</h3>
+                <p>Every alert comes with kid-friendly safety advice. Tornado, flood, hurricane — know what to do.</p>
+            </div>
+        </div>
     </div>
 
+    <!-- SUPPORT & PRIVACY -->
+    <div class="info-sections">
+        <div id="support">
+            <h2>Support</h2>
+            <p>Need help with Planet Pulse? Here are some common solutions:</p>
+            <ul>
+                <li><strong>Map not loading:</strong> Check your internet connection and try the refresh button in the top-right corner.</li>
+                <li><strong>Location not working:</strong> Go to Settings &gt; Privacy &gt; Location Services and make sure Planet Pulse is allowed.</li>
+                <li><strong>Restore purchase:</strong> Open the app, tap the settings icon, and tap "Restore Purchase" to restore your Pro unlock.</li>
+                <li><strong>Data seems outdated:</strong> Tap the refresh button on the map. Earthquake data updates every few minutes, wildfires every hour.</li>
+            </ul>
+            <p>Still need help? Reach out through the App Store listing.</p>
+        </div>
+
+        <hr class="info-divider">
+
+        <div id="privacy">
+            <h2>Privacy Policy</h2>
+            <p><strong>Last updated:</strong> February 2026</p>
+            <p>Planet Pulse is designed with privacy in mind, especially for younger users.</p>
+            <p><strong>Data we collect:</strong></p>
+            <ul>
+                <li><strong>Location (optional):</strong> Used only to show weather and air quality near you. Never stored or shared.</li>
+                <li><strong>Age group:</strong> Stored locally on your device only to tailor content. Never sent to any server.</li>
+                <li><strong>Purchase data:</strong> Managed by Apple and RevenueCat to process your Pro unlock. We never see your payment details.</li>
+            </ul>
+            <p><strong>Data we do NOT collect:</strong></p>
+            <ul>
+                <li>No personal information (name, email, phone)</li>
+                <li>No tracking or advertising identifiers</li>
+                <li>No analytics or usage tracking</li>
+                <li>No data shared with third parties for advertising</li>
+            </ul>
+            <p><strong>Third-party services:</strong></p>
+            <ul>
+                <li><strong>Mapbox:</strong> Provides map tiles. Subject to <a href="https://www.mapbox.com/legal/privacy">Mapbox Privacy Policy</a>.</li>
+                <li><strong>RevenueCat:</strong> Manages in-app purchases. Subject to <a href="https://www.revenuecat.com/privacy">RevenueCat Privacy Policy</a>.</li>
+            </ul>
+            <p>Questions about privacy? Reach out through the App Store listing.</p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
     <footer>
-        &copy; 2026 Planet Pulse. All rights reserved.<br>
-        Data sources: USGS, NASA FIRMS, NASA EONET, NOAA, Open-Meteo, RainViewer
+        <img src="images/app-icon.png" alt="Planet Pulse">
+        <p>Planet Pulse &copy; 2026. All rights reserved.</p>
+        <p style="margin-top: 4px;">Data: USGS &middot; NASA FIRMS &middot; NASA EONET &middot; NOAA &middot; Open-Meteo &middot; RainViewer</p>
     </footer>
+
 </body>
 </html>
