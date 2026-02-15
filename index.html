@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Pulse - Explore Earth's Natural Events</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a1628;
+            color: #e8ecf1;
+            line-height: 1.6;
+        }
+        .hero {
+            text-align: center;
+            padding: 80px 24px 60px;
+            background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 50%, #0a1628 100%);
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #4fc3f7, #81c784);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero .tagline {
+            font-size: 20px;
+            color: #90a4ae;
+            margin-bottom: 32px;
+        }
+        .hero .description {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-size: 17px;
+            color: #b0bec5;
+        }
+        .badge {
+            display: inline-block;
+            background: #fff;
+            border-radius: 14px;
+            padding: 8px 24px;
+            text-decoration: none;
+            color: #0a1628;
+            font-weight: 700;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+        .badge:hover { transform: scale(1.05); }
+        .features {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 28px;
+        }
+        .feature-card .icon { font-size: 36px; margin-bottom: 12px; }
+        .feature-card h3 { font-size: 18px; margin-bottom: 8px; color: #fff; }
+        .feature-card p { font-size: 14px; color: #90a4ae; }
+        .section {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+        .section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .section p, .section li {
+            color: #b0bec5;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        .section ul { padding-left: 20px; }
+        .section a { color: #4fc3f7; }
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: #546e7a;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Planet Pulse</h1>
+        <p class="tagline">Explore Earth's Natural Events</p>
+        <p class="description">
+            Real-time earthquakes, wildfires, volcanoes, and storms on an interactive satellite map.
+            Daily quizzes, safety tips, and kid-friendly explanations make learning about our planet an adventure.
+        </p>
+        <a class="badge" href="https://apps.apple.com/app/planet-pulse/id6745498845">Download on the App Store</a>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <div class="icon">🌍</div>
+            <h3>Live Map</h3>
+            <p>See real-time earthquakes, wildfires, volcanoes, tropical storms, and severe weather alerts on a satellite map.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🧠</div>
+            <h3>Daily Quiz</h3>
+            <p>Test your earth science knowledge with a new Brain Blast quiz every day. Learn about weather, geology, and more.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🛡️</div>
+            <h3>Safety Tips</h3>
+            <p>Kid-friendly safety tips for every type of natural event. Learn what to do during tornadoes, floods, and earthquakes.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">📊</div>
+            <h3>Real Data</h3>
+            <p>Powered by USGS, NASA, NOAA, and other trusted scientific sources. Real science, real events.</p>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section" id="support">
+        <h2>Support</h2>
+        <p>Need help with Planet Pulse? Here are some common solutions:</p>
+        <ul>
+            <li><strong>Map not loading:</strong> Check your internet connection and try the refresh button in the top-right corner.</li>
+            <li><strong>Location not working:</strong> Go to Settings > Privacy > Location Services and make sure Planet Pulse is allowed.</li>
+            <li><strong>Restore purchase:</strong> Open the app, tap the settings icon, and tap "Restore Purchase" to restore your Pro unlock.</li>
+            <li><strong>Data seems outdated:</strong> Tap the refresh button on the map screen. Earthquake data updates every few minutes, wildfires every hour.</li>
+        </ul>
+        <p>Still need help? Email us at <a href="mailto:support@planetpulseapp.com">support@planetpulseapp.com</a></p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section" id="privacy">
+        <h2>Privacy Policy</h2>
+        <p><strong>Last updated:</strong> February 2026</p>
+        <p>Planet Pulse is designed with privacy in mind, especially for our younger users.</p>
+        <p><strong>Data we collect:</strong></p>
+        <ul>
+            <li><strong>Location (optional):</strong> Used only to show weather and air quality near you. Your location is never stored or shared.</li>
+            <li><strong>Age group:</strong> Stored locally on your device only, to tailor content difficulty. Never sent to any server.</li>
+            <li><strong>Purchase data:</strong> Managed by Apple and RevenueCat to process your Pro unlock. We do not see your payment details.</li>
+        </ul>
+        <p><strong>Data we do NOT collect:</strong></p>
+        <ul>
+            <li>No personal information (name, email, phone)</li>
+            <li>No tracking or advertising identifiers</li>
+            <li>No analytics or usage tracking</li>
+            <li>No data shared with third parties for advertising</li>
+        </ul>
+        <p><strong>Third-party services:</strong></p>
+        <ul>
+            <li><strong>Mapbox:</strong> Provides map tiles. Subject to <a href="https://www.mapbox.com/legal/privacy">Mapbox Privacy Policy</a>.</li>
+            <li><strong>RevenueCat:</strong> Manages in-app purchases. Subject to <a href="https://www.revenuecat.com/privacy">RevenueCat Privacy Policy</a>.</li>
+        </ul>
+        <p>Questions about privacy? Email <a href="mailto:support@planetpulseapp.com">support@planetpulseapp.com</a></p>
+    </div>
+
+    <footer>
+        &copy; 2026 Planet Pulse. All rights reserved.<br>
+        Data sources: USGS, NASA FIRMS, NASA EONET, NOAA, Open-Meteo, RainViewer
+    </footer>
+</body>
+</html>
